@@ -1,0 +1,395 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "test",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Handle an incoming authentication request.",
+                "operationId": "42f77e072dec84b0e1094cca1228298e",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Handle an incoming registration request.",
+                "operationId": "573de1fed352c1205a32c4d1b9877375",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/rate": {
+            "get": {
+                "tags": [
+                    "currencies"
+                ],
+                "operationId": "05175bc14caf6c81de4c0ff1570df003",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentRateResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Index all posts",
+                "operationId": "107ec03de3b9342167a83dcdcfa71d68",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Store Post",
+                "operationId": "1b251f56252c8c7c951125e0f668cf77",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StorePostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{post_id}": {
+            "get": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Show Post",
+                "operationId": "2d6962bd6fff96f97e6fca825a53e535",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Delete Post",
+                "operationId": "1e9b36d119aeaea1bdf6745088073f61",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "posts"
+                ],
+                "summary": "Update Post",
+                "operationId": "4a70670faa3225a04e7af0564f048c19",
+                "parameters": [
+                    {
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdatePostRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PostResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "LoginRequest": {
+                "title": "LoginRequest",
+                "description": "Login Request",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "email@test.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "description": "Register Request",
+                "required": [
+                    "email",
+                    "name",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "email@test.com"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Petro"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "password"
+                    },
+                    "password_confirmation": {
+                        "type": "string",
+                        "example": "password"
+                    }
+                },
+                "type": "object"
+            },
+            "ShowPostRequest": {
+                "title": "ShowPostRequest",
+                "description": "Post show request",
+                "properties": {
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "post": {
+                        "type": "string",
+                        "maximum": 65535,
+                        "example": "Some text"
+                    }
+                },
+                "type": "object"
+            },
+            "StorePostRequest": {
+                "title": "StorePostRequest",
+                "description": "Post store request",
+                "properties": {
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "post": {
+                        "type": "string",
+                        "maximum": 65535,
+                        "example": "Some text"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdatePostRequest": {
+                "title": "UpdatePostRequest",
+                "description": "Post update request",
+                "properties": {
+                    "post": {
+                        "type": "string",
+                        "maximum": 65535,
+                        "example": "Some text"
+                    }
+                },
+                "type": "object"
+            },
+            "CurrentRateResource": {
+                "title": "CurrentRateResource",
+                "description": "CurrentRate Resource",
+                "properties": {
+                    "buy": {
+                        "description": "Current buy currency rate",
+                        "type": "number",
+                        "format": "float",
+                        "example": 39.5
+                    },
+                    "sale": {
+                        "description": "Current sale currency rate",
+                        "type": "number",
+                        "format": "float",
+                        "example": 39.5
+                    }
+                },
+                "type": "object"
+            },
+            "PostResource": {
+                "title": "PostResource",
+                "description": "Post Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "post": {
+                        "type": "string",
+                        "example": "Some text"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024:06:03"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserResource"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "title": "UserResource",
+                "description": "User Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Petro"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "email@test.com"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "users",
+            "description": "Users"
+        },
+        {
+            "name": "posts",
+            "description": "Posts"
+        },
+        {
+            "name": "currencies",
+            "description": "Currencies"
+        }
+    ]
+}
